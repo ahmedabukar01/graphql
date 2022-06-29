@@ -10,7 +10,7 @@ const schema = new GraphQLSchema({
         fields: () => ({
             message: {
                 type: GraphQLString,
-                resolve: () => 'hello world'
+                resolve: () => 'hello world this ahmed from where he wants'
             }
         })
     })
