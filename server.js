@@ -1,6 +1,6 @@
 const express = require('express');
 const {graphqlHTTP} = require('express-graphql')
-const {GraphQLObjectType, GraphQLSchema, GraphQLString} = require('graphql')
+const {GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLList, GraphQLNonNull, GraphQLInt} = require('graphql')
 
 const app = express();
 
@@ -21,15 +21,24 @@ const books = [
 	{ id: 8, name: 'Beyond the Shadows', authorId: 3 }
 ]
 
-const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'helloworld',
-        fields: () => ({
-            message: {
-                type: GraphQLString,
-                resolve: () => 'hello world this ahmed from where he '
-            }
-        })
+const BookType = new GraphQLObjectType({
+    name: 'Book',
+    description: 'this represents a book',
+    fields: () => ({
+        id: {type: GraphQLNonNull(GraphQLInt)},
+        name: {type: GraphQLNonNull(GraphQLString)},
+        authorId: {type: GraphQLNonNull(GraphQLInt)}
+    })
+})
+const RootQueryType = new GraphQLObjectType({
+    name: 'Query',
+    description: 'Query Type',
+    fields: ()=> ({
+        books: {
+            type: GraphQLList(BookType),
+            description: 'list of all books',
+            resolve: ()=> books
+        }
     })
 })
 
