@@ -42,6 +42,11 @@ const RootQueryType = new GraphQLObjectType({
     })
 })
 
+// schema
+const schema = new GraphQLSchema({
+    query: RootQueryType
+})
+
 app.use('/graphql', graphqlHTTP({
     schema: schema,
     graphiql: true
